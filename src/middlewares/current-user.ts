@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 interface UserPayload {
-    id: string;
+    uuid: string;
     email: string;
 }
 
@@ -22,7 +22,7 @@ export const currentUser = (req: Request, res: Response, next: NextFunction) => 
     }
 
     try {
-        const payload = jwt.verify(req.session.jwt, process.env.JWT_KEY!) as UserPayload;
+        const payload = jwt.verify(req.session.jwt, process.env.JWT_KEY! || "mysecret") as UserPayload;
         req.currentUser = payload;
     } catch (err) {
         console.log('Error: ', err);
