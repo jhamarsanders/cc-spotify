@@ -2,6 +2,8 @@ import { Model } from '../database/postgres';
 import { TABLE_NAMES } from '../constants/tableNames';
 import { Encryption } from '../helpers/encryption';
 import { v4 as uuid } from 'uuid';
+import { Post } from './Post';
+import { Follower } from './Follower';
 
 interface JSONSchema {
     type: string;
@@ -16,7 +18,11 @@ export class User extends Model {
     lastName!: string;
     email!: string;
     password!: string;
+
     userJWT?: string;
+    posts?: Post[];
+    followers?: Follower[];
+    following?: Follower[];
 
     static tableName = TABLE_NAMES.user;
 
@@ -38,6 +44,35 @@ export class User extends Model {
     $beforeInsert(): void {
         this.password = Encryption.generatePassword(this.password);
         this.uuid = uuid();
+    }
+
+    static get relationMappings(): any {
+        return {
+            posts: {
+                relation: Model.HasManyRelation,
+                modelClass: Post,
+                join: {
+                    from: `${TABLE_NAMES.user}.uuid`,
+                    to: `${TABLE_NAMES.posts}.user`
+                }
+            },
+            followers: {
+                relation: Model.HasManyRelation,
+                modelClass: Follower,
+                join: {
+                    from: `${TABLE_NAMES.user}.uuid`,
+                    to: `${TABLE_NAMES.followers}.leader`
+                }
+            },
+            following: {
+                relation: Model.HasManyRelation,
+                modelClass: Follower,
+                join: {
+                    from: `${TABLE_NAMES.user}.uuid`,
+                    to: `${TABLE_NAMES.followers}.follower`
+                }
+            }
+        }
     }
 
 }
