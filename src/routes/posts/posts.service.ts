@@ -7,7 +7,8 @@ interface PostsReqObj {
 }
 
 export class PostsService {
-    static async createPost(postData: PostsReqObj): Promise<Post> {
+    static async createPost(postData: PostsReqObj, currentUser: string): Promise<Post> {
+        postData.user = currentUser;
         const post = await Post.query().insert(postData);
 
         return post;

@@ -7,7 +7,7 @@ import { UserTest } from '../constants/user';
 declare global {
     namespace NodeJS {
         interface Global {
-            signin(): string[];
+            signin(userUUID?: string): string[];
         }
     }
 }
@@ -21,8 +21,8 @@ afterAll(async() => {
     await CleanUp.cleanUpUser();
 });
 
-global.signin = () => {
-    const id = uuid();
+global.signin = (userUUID?: string) => {
+    const id = userUUID || uuid();
     const payload = {
         uuid: id,
         email: UserTest.email
