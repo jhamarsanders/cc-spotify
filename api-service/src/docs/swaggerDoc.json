@@ -1,0 +1,132 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Spotify API - Coding Challenge",
+      "description": "An API that utilizes the Spotify API to retreive track data.",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/",
+    "tags": [
+      {
+        "name": "Track",
+        "description": "API for tracks in the system"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/track": {
+        "post": {
+          "tags": [
+            "Track"
+          ],
+          "description": "Create new track in our system",
+          "parameters": [
+            {
+              "name": "isrc",
+              "in": "body",
+              "description": "The ISRC of the track"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New Track is created",
+              "schema": {
+                "$ref": "#/definitions/Track"
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "Track"
+          ],
+          "summary": "Get tracks from our system",
+          "parameters": [
+            {
+              "name": "isrc",
+              "in": "query",
+              "description": "The ISRC of the track"
+            },
+            {
+              "name": "artist",
+              "in": "query",
+              "description": "The artist name of the track"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Track"
+              }
+            }
+          }
+        }
+      },
+      "/track/isrc": {
+        "get": {
+            "tags": [
+              "Track"
+            ],
+            "summary": "Get isrc of a track from our system",
+            "parameters": [
+              {
+                "name": "title",
+                "in": "query",
+                "description": "The title of the track"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Track"
+                }
+              }
+            }
+        }
+      }
+    },
+    "definitions": {
+      "Track": {
+        "required": [
+          "isrc"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "uniqueItems": true
+          },
+          "isrc": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "artist_id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "image_uri": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }

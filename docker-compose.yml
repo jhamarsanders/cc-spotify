@@ -1,0 +1,27 @@
+version: '3'
+services:
+  api:
+    build: ./api-service
+    ports:
+     - "8082:3000"
+    depends_on:
+     - postgres
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_USER: admin
+      DATABASE_PW: yes123
+      DATABASE_DB: SPOTIFY
+      DATABASE_PORT: 5432
+    volumes:
+     - ./api-service/api:/app/api
+  # db:
+  #   build: ./database-service
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: yes123
+      POSTGRES_DB: SPOTIFY
+    ports:
+      - "2345:5432"
