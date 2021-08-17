@@ -18,7 +18,8 @@
       }
     ],
     "schemes": [
-      "http"
+      "http",
+      "https"
     ],
     "consumes": [
       "application/json"
@@ -56,7 +57,7 @@
           "tags": [
             "Track"
           ],
-          "summary": "Get tracks from our system",
+          "summary": "Get tracks from our system by entering the ISRC or Artist of a track",
           "parameters": [
             {
               "name": "isrc",
@@ -84,7 +85,7 @@
             "tags": [
               "Track"
             ],
-            "summary": "Get isrc of a track from our system",
+            "summary": "Don't know the isrc of a track? Just enter the song title and we'll return it to you.",
             "parameters": [
               {
                 "name": "title",
@@ -124,6 +125,9 @@
             "type": "string"
           },
           "image_uri": {
+            "type": "string"
+          },
+          "artist_name": {
             "type": "string"
           }
         }

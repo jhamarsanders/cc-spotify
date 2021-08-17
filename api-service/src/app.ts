@@ -21,13 +21,17 @@ app.use(cookieSession({
 
 app.use(currentUser);
 
+if (process.env.NODE_ENV === 'production') {
+    docs.host = 'spotify-cc.herokuapp.com'
+}
+
 app.use('/api/track', trackRouter);
 app.use('/api-docs', SwaggerUI.serve, SwaggerUI.setup(docs));
 
-app.use("/heartbeat", express().get('/', (req: Request, res: Response) => {
+app.use("/", express().get('/', (req: Request, res: Response) => {
     res.status( 200 ).send({
       status : "SUCCESS",
-      message: "Heartbeat success."
+      message: "APIs are open."
     })
 }));
 

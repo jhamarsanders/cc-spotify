@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express';
+import { body } from 'express-validator';
+import { validateRequest } from '../../middlewares/validate-request';
 import { ResponseHandler } from '../utils/handlers';
 import { TrackService } from './track.service';
 
@@ -21,7 +23,12 @@ router.get('/', async(req: Request, res: Response, next) => {
     ResponseHandler.handleSuccess(res, { data: track });
 });
 
-router.post('/', async (req, res) => {
+router.post('/', [
+    body('isrc')
+        .not()
+        .isEmpty()
+        .withMessage('ISRC field is required')
+], validateRequest, async (req: Request, res: Response) => {
     const { isrc } = req.body;
 
     if (!isrc) {

@@ -8,8 +8,7 @@
     "build": "tsc --build",
     "start": "node dist/index.js",
     "test": "jest --watchAll --no-cache --detectOpenHandles",
-    "test:ci": "jest",
-    "postinstall" : "tsc --build"
+    "test:ci": "jest"
   },
   "jest": {
     "preset": "ts-jest",
