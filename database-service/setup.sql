@@ -1,6 +1,13 @@
 DROP TABLE IF EXISTS public.table;
 DROP TABLE IF EXISTS public.artist;
 
+CREATE TABLE public.artist
+(
+    id bigserial NOT NULL,
+    name character varying NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE public.track
 (
     id bigserial NOT NULL,
@@ -10,16 +17,9 @@ CREATE TABLE public.track
     image_uri character varying,
     PRIMARY KEY (id),
     CONSTRAINT isrc_uniq UNIQUE (isrc),
-    ADD CONSTRAINT track_artist_fk FOREIGN KEY (artist)
+    CONSTRAINT track_artist_fk FOREIGN KEY (artist_id)
         REFERENCES public.artist (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE NO ACTION
-        NOT VALID;
-);
-
-CREATE TABLE public.artist
-(
-    id bigserial NOT NULL,
-    name character varying NOT NULL,
-    PRIMARY KEY (id)
+        NOT VALID
 );
